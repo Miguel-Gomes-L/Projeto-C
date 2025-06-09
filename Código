@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
 #define MAX_JOGOS 100
 #define ARQUIVO_DADOS "jogos.txt"
 
@@ -58,6 +57,36 @@ void adicionarJogo(struct Jogo jogos[], int *totalJogos) {
     jogos[*totalJogos] = novo;
     (*totalJogos)++;
     printf("Jogo adicionado com sucesso!\n");
+}
+
+void removerJogo(struct Jogo jogos[], int *totalJogos) {
+    if (*totalJogos == 0) {
+        printf("Não há jogos cadastrados para remover!\n");
+        return;
+    }
+
+    mostrarCatalogo(jogos, *totalJogos);
+    printf("\nDigite o ID do jogo que deseja remover: ");
+    int idRemover;
+    scanf("%d", &idRemover);
+
+    int encontrado = 0;
+    for (int i = 0; i < *totalJogos; i++) {
+        if (jogos[i].id == idRemover) {
+            encontrado = 1;
+            
+            for (int j = i; j < *totalJogos - 1; j++) {
+                jogos[j] = jogos[j + 1];
+            }
+            (*totalJogos)--;
+            printf("Jogo removido com sucesso!\n");
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Jogo não encontrado!\n");
+    }
 }
 
 void salvarJogos(struct Jogo jogos[], int totalJogos) {
@@ -143,7 +172,8 @@ int main() {
         printf("1. Ver catálogo completo\n");
         printf("2. Selecionar um jogo para ver detalhes\n");
         printf("3. Adicionar novo jogo\n");
-        printf("4. Sair\n");
+        printf("4. Remover um jogo\n");
+        printf("5. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
@@ -176,6 +206,11 @@ int main() {
                 break;
                 
             case 4:
+                removerJogo(jogos, &totalJogos);
+                salvarJogos(jogos, totalJogos);
+                break;
+                
+            case 5:
                 salvarJogos(jogos, totalJogos);
                 printf("Dados salvos. Saindo do sistema...\n");
                 return 0;
