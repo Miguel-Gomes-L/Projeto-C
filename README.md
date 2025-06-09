@@ -16,7 +16,6 @@ struct Jogo {
     char status[30];
 };
 
-/* Função para criar a tabela no banco de dados */
 void criarTabela() {
     sqlite3 *db;
     char *err_msg = 0;
@@ -46,7 +45,6 @@ void criarTabela() {
     sqlite3_close(db);
 }
 
-/* Função para inserir dados iniciais */
 void inserirDadosIniciais() {
     sqlite3 *db;
     char *err_msg = 0;
@@ -58,7 +56,6 @@ void inserirDadosIniciais() {
         return;
     }
     
-    // Verifica se a tabela já tem dados
     int count = 0;
     char *sql_count = "SELECT COUNT(*) FROM Jogos;";
     rc = sqlite3_exec(db, sql_count, [](void *data, int argc, char **argv, char **colName) {
@@ -85,7 +82,6 @@ void inserirDadosIniciais() {
     sqlite3_close(db);
 }
 
-/* Carrega jogos do banco de dados */
 void carregarJogos(struct Jogo jogos[], int *totalJogos) {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -125,7 +121,6 @@ void carregarJogos(struct Jogo jogos[], int *totalJogos) {
     sqlite3_close(db);
 }
 
-/* Adiciona um novo jogo ao banco de dados */
 void adicionarJogo(struct Jogo jogos[], int *totalJogos) {
     if (*totalJogos >= MAX_JOGOS) {
         printf("Limite máximo de jogos atingido!\n");
@@ -146,7 +141,6 @@ void adicionarJogo(struct Jogo jogos[], int *totalJogos) {
     scanf(" %[^\n]", novo.plataforma);
     strcpy(novo.status, "Disponível");
 
-    // Inserir no banco de dados
     sqlite3 *db;
     char *err_msg = 0;
     int rc;
@@ -178,8 +172,6 @@ void adicionarJogo(struct Jogo jogos[], int *totalJogos) {
     (*totalJogos)++;
     printf("Jogo adicionado com sucesso!\n");
 }
-
-/* (As funções mostrarCatalogo e mostrarDetalhes permanecem iguais) */
 
 int main() {
     // Inicializa o banco de dados
