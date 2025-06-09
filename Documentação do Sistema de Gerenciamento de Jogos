@@ -1,37 +1,143 @@
-Visão Geral
+📌 Visão Geral
+Sistema de gerenciamento de catálogo de jogos desenvolvido em C com persistência em banco de dados SQLite, que permite:
 
-Este é um sistema de gerenciamento de cátalogo de jogos desenvolvido em C que permite:
+📋 Listar todos os jogos cadastrados
 
-.Listar todos os jogos cadastrados;
-.Visualizar detalhes de jogos especificos;
-.Adicionar novos jogos ao catalogo;
-.Salvar os dados persistentemente em arquivo.
+🔍 Visualizar detalhes de jogos específicos
 
-Funcionalidades
+➕ Adicionar novos jogos ao catálogo
 
+💾 Armazenar dados em banco de dados SQLite
+
+🛠️ Funcionalidades
 Principais Recursos
+Persistência em Banco de Dados - Armazenamento robusto em SQLite
 
-.Catálogo completo - Visualize todos os jogos em formato resumido;
-.Detalhes do jogo - Acesse informações completas sobre cada jogo;
-.Adição de jogos - Cadastre novos títulos facilmente;
-.Persistência de dados - Os dados são salvos automaticamente em arquivo.
+CRUD Completo - Create, Read (implementado), com estrutura para Update e Delete
 
-Estrutura de Dados
+Inicialização Automática - Cria banco e tabela se não existirem
 
-struct Jogo {
-    int id;                      // Identificador único
-    char titulo[50];             // Nome do jogo
-    char desenvolvedora[50];     // Empresa desenvolvedora
-    int ano;                     // Ano de lançamento
-    char genero[50];             // Gênero do jogo
-    char plataforma[50];         // Plataformas disponíveis
-    char status[30];             // Status (Disponível/Indisponível)
-};
+Dados Iniciais - Popula automaticamente com exemplos na primeira execução
 
-Instalação e execução
-
+Estrutura do Banco de Dados
+sql
+CREATE TABLE Jogos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo TEXT NOT NULL,
+    desenvolvedora TEXT NOT NULL,
+    ano INTEGER NOT NULL,
+    genero TEXT NOT NULL,
+    plataforma TEXT NOT NULL,
+    status TEXT NOT NULL
+);
+⚙️ Instalação e Execução
 Pré-requisitos
+Compilador C (GCC recomendado)
 
-Compilador C (GCC recomendado);
-Sistema operacional Linux/Windows/macOS.
+Biblioteca SQLite3 instalada
+
+Linux/Windows/macOS
+
+Instalação das Dependências (Linux)
+bash
+sudo apt-get update
+sudo apt-get install gcc libsqlite3-dev
+Como Executar
+Clone o repositório:
+
+bash
+git clone https://github.com/seu-usuario/gerenciador-jogos-sqlite.git
+Navegue até o diretório:
+
+bash
+cd gerenciador-jogos-sqlite
+Compile o programa:
+
+bash
+gcc main.c -o gerenciador -lsqlite3
+Execute:
+
+bash
+./gerenciador
+📋 Menu Principal
+O sistema oferece um menu interativo com as seguintes opções:
+
+Ver catálogo completo - Lista todos os jogos (ID, Título, Ano, Status)
+
+Selecionar jogo - Mostra detalhes completos de um jogo específico
+
+Adicionar novo jogo - Permite cadastrar um novo título
+
+Sair - Encerra o programa
+
+🗃️ Estrutura de Arquivos
+main.c - Código fonte principal
+
+jogos.db - Banco de dados SQLite (criado automaticamente)
+
+README.md - Esta documentação
+
+🔍 Exemplo de Uso
+Na primeira execução, o sistema:
+
+Cria o banco de dados jogos.db
+
+Cria a tabela Jogos
+
+Insere 3 jogos de exemplo
+
+Interação típica:
+
+bash
+=== MENU ===
+1. Ver catálogo completo
+2. Selecionar um jogo para ver detalhes
+3. Adicionar novo jogo
+4. Sair
+Escolha uma opção: 1
+
+=== Catálogo de Jogos ===
+1. Uncharted: The Nathan Drake Collection (2015) - Disponivel
+2. Shadow of the Colossus (2005) - Disponivel
+3. The Legend of Zelda: Breath of the Wild (2017) - Indisponível (alugado)
+🛡️ Considerações de Segurança
+O sistema atual usa SQL concatenado para simplicidade
+
+Para ambiente de produção, recomenda-se:
+
+Usar prepared statements
+
+Validar todas as entradas do usuário
+
+Implementar tratamento de erros robusto
+
+🤝 Contribuição
+Siga estes passos para contribuir:
+
+Faça um fork do projeto
+
+Crie sua branch (git checkout -b feature/NovaFeature)
+
+Commit suas mudanças (git commit -m 'Adiciona NovaFeature')
+
+Push para a branch (git push origin feature/NovaFeature)
+
+Abra um Pull Request
+
+📄 Licença
+Distribuído sob a licença MIT. Veja LICENSE para mais informações.
+
+✉️ Contato
+Desenvolvedor - @seu_twitter - seu-email@exemplo.com
+
+Link do Projeto: https://github.com/seu-usuario/gerenciador-jogos-sqlite
+
+🚀 Roadmap
+Implementar atualização de jogos
+
+Implementar exclusão de jogos
+
+Adicionar sistema de buscas
+
+Implementar interface gráfica
 
