@@ -1,97 +1,122 @@
-🎮 Sistema de Gerenciamento de Catálogo de Jogos (C)
+Este é um simples sistema de gerenciamento de catálogo de jogos desenvolvido em C. O sistema permite o gerenciamento de jogos, incluindo adicionar, remover, e visualizar detalhes de jogos, além de salvar e carregar os dados de um arquivo de texto.
 
-Um sistema simples feito em linguagem **C** para gerenciamento de jogos, com armazenamento em arquivo `.txt`.
+Funcionalidades
+Ver catálogo completo: Exibe todos os jogos presentes no catálogo.
 
-📁 Sobre o Projeto
+Ver detalhes de um jogo: Exibe informações detalhadas sobre um jogo selecionado.
 
-Este projeto é uma aplicação de terminal escrita em C que permite:
+Adicionar novo jogo: Permite adicionar um novo jogo ao catálogo.
 
-* 📋 Listar jogos cadastrados
-* 🔍 Ver detalhes de um jogo
-* ➕ Adicionar novos jogos
-* 💾 Salvar e carregar os dados de um arquivo texto (`jogos.txt`)
+Remover jogo: Remove um jogo do catálogo pelo ID.
 
-🛠️ Funcionalidades
+Salvar e carregar dados: Os dados dos jogos são salvos em um arquivo de texto (jogos.txt) e podem ser carregados ao iniciar o sistema.
 
-* ✅ Armazenamento local usando arquivo `.txt`
-* ✅ Cadastro e visualização de jogos
-* ✅ Detalhamento por ID
-* ✅ Inclusão de dados iniciais se o arquivo estiver vazio
-* ✅ Atualização automática do arquivo ao adicionar novos jogos
+Estrutura de Arquivos
+Arquivo de Dados: jogos.txt
+Este arquivo armazena os dados dos jogos no formato:
 
-📦 Estrutura dos Dados
-
-Cada jogo é representado pela seguinte estrutura:
-
-struct Jogo {
-    int id;
-    char titulo[50];
-    char desenvolvedora[50];
-    int ano;
-    char genero[50];
-    char plataforma[50];
-    char status[30];
-};
-
-
-💻 Como usar
-
-1.Compilação
-
-Você pode usar qualquer compilador C (GCC, MinGW, Dev C++). Exemplo com GCC:
-
-gcc main.c -o catalogo
-
-2.Execução
-
-./catalogo
-
-📂 Arquivo de Dados
-
-O programa usa um arquivo chamado `jogos.txt` no mesmo diretório para salvar e carregar os dados.
-
-Formato de armazenamento no arquivo:
+ID
+Título do jogo
+Desenvolvedora
+Ano de lançamento
+Gênero
+Plataforma
+Status (Disponível, Indisponível, Alugado, etc.)
+Exemplo de conteúdo do arquivo jogos.txt:
 
 1
 Uncharted: The Nathan Drake Collection
-Naught Dog
+Naughty Dog
 2015
 Ação e aventura
 PS4, PS5, PC
-Disponivel
+Disponível
+2
+Shadow of the Colossus
+Team ICO
+2005
+Ação e aventura
+PS2, PS3, PS4
+Disponível
+3
+The Legend of Zelda: Breath of the Wild
+Nintendo EPD
+2017
+Ação e aventura
+Nintendo Switch
+Indisponível (alugado)
+Como Executar
+Requisitos
+Um compilador C (ex: GCC)
 
-Cada jogo ocupa 7 linhas no arquivo.
+Sistema operacional com suporte a C (Linux, macOS, Windows com WSL ou MinGW)
 
-📷 Exemplo de Uso
+Compilação
+Para compilar o código:
 
-=== MENU ===
-1. Ver catálogo completo
-2. Selecionar um jogo para ver detalhes
-3. Adicionar novo jogo
-4. Sair
-Escolha uma opção: 1
+bash
+Copiar código
+gcc -o catalogo_jogos catalogo_jogos.c
+Execução
+Após a compilação, execute o programa:
 
-=== Catálogo de Jogos ===
-1. Uncharted: The Nathan Drake Collection (2015) - Disponivel
-2. Shadow of the Colossus (2005) - Disponivel
-3. The Legend of Zelda: Breath of the Wild (2017) - Indisponível (alugado)
+bash
+Copiar código
+./catalogo_jogos
+Isso iniciará o menu interativo onde você pode escolher entre visualizar o catálogo de jogos, adicionar ou remover jogos, entre outras opções.
 
-✍️ Adicionando novos jogos
+Funções Principais
+mostrarCatalogo()
+Exibe o catálogo de jogos, listando os jogos com seu ID, título, ano de lançamento e status.
 
-Você pode adicionar um jogo interativamente no menu usando a opção `3`, preenchendo os campos solicitados.
+Parâmetros:
 
-📌 Requisitos
+jogos[]: Array de jogos cadastrados.
 
-* Um compilador C (como GCC ou Dev C++)
-* Permissão para leitura e escrita no diretório onde o executável roda (para gravar `jogos.txt`)
+totalJogos: Número total de jogos cadastrados.
 
-🚀 Melhorias Futuras
+mostrarDetalhes()
+Exibe todos os detalhes de um jogo selecionado pelo seu ID.
 
-* Editar ou remover jogos
-* Ordenar catálogo por nome, ano ou status
-* Interface gráfica com C++ e Qt ou SDL
-* Suporte a exportação para JSON ou CSV
+Parâmetros:
 
-🧑‍💻 Autor
+jogo: Estrutura de dados de um único jogo.
 
-Desenvolvido por \Miguel-Gomes-L
+adicionarJogo()
+Adiciona um novo jogo ao catálogo.
+
+Parâmetros:
+
+jogos[]: Array de jogos cadastrados.
+
+totalJogos: Ponteiro para o número total de jogos cadastrados.
+
+removerJogo()
+Remove um jogo do catálogo baseado no ID informado pelo usuário.
+
+Parâmetros:
+
+jogos[]: Array de jogos cadastrados.
+
+totalJogos: Ponteiro para o número total de jogos cadastrados.
+
+salvarJogos()
+Salva todos os jogos do catálogo em um arquivo de texto (jogos.txt).
+
+Parâmetros:
+
+jogos[]: Array de jogos cadastrados.
+
+totalJogos: Número total de jogos cadastrados.
+
+carregarJogos()
+Carrega os dados dos jogos armazenados no arquivo de texto (jogos.txt).
+
+Parâmetros:
+
+jogos[]: Array de jogos cadastrados.
+
+totalJogos: Ponteiro para o número total de jogos cadastrados.
+
+main()
+Função principal que executa o menu interativo e gerencia as operações do sistema.
