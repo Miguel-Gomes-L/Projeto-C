@@ -1,94 +1,69 @@
-📌 Visão Geral
-Sistema de gerenciamento de catálogo de jogos desenvolvido em C com persistência em banco de dados SQLite, que permite:
+🎮 Sistema de Gerenciamento de Catálogo de Jogos (C)
 
-📋 Listar todos os jogos cadastrados
+Um sistema simples feito em linguagem **C** para gerenciamento de jogos, com armazenamento em arquivo `.txt`.
 
-🔍 Visualizar detalhes de jogos específicos
+📁 Sobre o Projeto
 
-➕ Adicionar novos jogos ao catálogo
+Este projeto é uma aplicação de terminal escrita em C que permite:
 
-💾 Armazenar dados em banco de dados SQLite
+* 📋 Listar jogos cadastrados
+* 🔍 Ver detalhes de um jogo
+* ➕ Adicionar novos jogos
+* 💾 Salvar e carregar os dados de um arquivo texto (`jogos.txt`)
 
 🛠️ Funcionalidades
-Principais Recursos
-Persistência em Banco de Dados - Armazenamento robusto em SQLite
 
-CRUD Completo - Create, Read (implementado), com estrutura para Update e Delete
+* ✅ Armazenamento local usando arquivo `.txt`
+* ✅ Cadastro e visualização de jogos
+* ✅ Detalhamento por ID
+* ✅ Inclusão de dados iniciais se o arquivo estiver vazio
+* ✅ Atualização automática do arquivo ao adicionar novos jogos
 
-Inicialização Automática - Cria banco e tabela se não existirem
+📦 Estrutura dos Dados
 
-Dados Iniciais - Popula automaticamente com exemplos na primeira execução
+Cada jogo é representado pela seguinte estrutura:
 
-Estrutura do Banco de Dados
-sql
-CREATE TABLE Jogos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT NOT NULL,
-    desenvolvedora TEXT NOT NULL,
-    ano INTEGER NOT NULL,
-    genero TEXT NOT NULL,
-    plataforma TEXT NOT NULL,
-    status TEXT NOT NULL
-);
-⚙️ Instalação e Execução
-Pré-requisitos
-Compilador C (GCC recomendado)
+struct Jogo {
+    int id;
+    char titulo[50];
+    char desenvolvedora[50];
+    int ano;
+    char genero[50];
+    char plataforma[50];
+    char status[30];
+};
 
-Biblioteca SQLite3 instalada
 
-Linux/Windows/macOS
+💻 Como usar
 
-Instalação das Dependências (Linux)
-bash
-sudo apt-get update
-sudo apt-get install gcc libsqlite3-dev
-Como Executar
-Clone o repositório:
+1.Compilação
 
-bash
-git clone https://github.com/seu-usuario/gerenciador-jogos-sqlite.git
-Navegue até o diretório:
+Você pode usar qualquer compilador C (GCC, MinGW, Dev C++). Exemplo com GCC:
 
-bash
-cd gerenciador-jogos-sqlite
-Compile o programa:
+gcc main.c -o catalogo
 
-bash
-gcc main.c -o gerenciador -lsqlite3
-Execute:
+2.Execução
 
-bash
-./gerenciador
-📋 Menu Principal
-O sistema oferece um menu interativo com as seguintes opções:
+./catalogo
 
-Ver catálogo completo - Lista todos os jogos (ID, Título, Ano, Status)
+📂 Arquivo de Dados
 
-Selecionar jogo - Mostra detalhes completos de um jogo específico
+O programa usa um arquivo chamado `jogos.txt` no mesmo diretório para salvar e carregar os dados.
 
-Adicionar novo jogo - Permite cadastrar um novo título
+Formato de armazenamento no arquivo:
 
-Sair - Encerra o programa
+1
+Uncharted: The Nathan Drake Collection
+Naught Dog
+2015
+Ação e aventura
+PS4, PS5, PC
+Disponivel
 
-🗃️ Estrutura de Arquivos
-main.c - Código fonte principal
+Cada jogo ocupa 7 linhas no arquivo.
 
-jogos.db - Banco de dados SQLite (criado automaticamente)
+📷 Exemplo de Uso
 
-README.md - Esta documentação
-
-🔍 Exemplo de Uso
-Na primeira execução, o sistema:
-
-Cria o banco de dados jogos.db
-
-Cria a tabela Jogos
-
-Insere 3 jogos de exemplo
-
-Interação típica:
-
-bash
 === MENU ===
 1. Ver catálogo completo
 2. Selecionar um jogo para ver detalhes
@@ -100,43 +75,23 @@ Escolha uma opção: 1
 1. Uncharted: The Nathan Drake Collection (2015) - Disponivel
 2. Shadow of the Colossus (2005) - Disponivel
 3. The Legend of Zelda: Breath of the Wild (2017) - Indisponível (alugado)
-🛡️ Considerações de Segurança
-O sistema atual usa SQL concatenado para simplicidade
 
-Para ambiente de produção, recomenda-se:
+✍️ Adicionando novos jogos
 
-Usar prepared statements
+Você pode adicionar um jogo interativamente no menu usando a opção `3`, preenchendo os campos solicitados.
 
-Validar todas as entradas do usuário
+📌 Requisitos
 
-Implementar tratamento de erros robusto
+* Um compilador C (como GCC ou Dev C++)
+* Permissão para leitura e escrita no diretório onde o executável roda (para gravar `jogos.txt`)
 
-🤝 Contribuição
-Siga estes passos para contribuir:
+🚀 Melhorias Futuras
 
-Faça um fork do projeto
+* Editar ou remover jogos
+* Ordenar catálogo por nome, ano ou status
+* Interface gráfica com C++ e Qt ou SDL
+* Suporte a exportação para JSON ou CSV
 
-Crie sua branch (git checkout -b feature/NovaFeature)
+🧑‍💻 Autor
 
-Commit suas mudanças (git commit -m 'Adiciona NovaFeature')
-
-Push para a branch (git push origin feature/NovaFeature)
-
-Abra um Pull Request
-
-📄 Licença
-Distribuído sob a licença MIT. Veja LICENSE para mais informações.
-
-✉️ Contato
-
-Link do Projeto: https://github.com/Miguel-Gomes-L/Projeto-C
-
-🚀 Roadmap
-Implementar atualização de jogos
-
-Implementar exclusão de jogos
-
-Adicionar sistema de buscas
-
-Implementar interface gráfica
-
+Desenvolvido por \Miguel-Gomes-L
