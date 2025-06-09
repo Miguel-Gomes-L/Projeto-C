@@ -1,0 +1,37 @@
+Visão Geral
+
+Este é um sistema de gerenciamento de cátalogo de jogos desenvolvido em C que permite:
+
+.Listar todos os jogos cadastrados;
+.Visualizar detalhes de jogos especificos;
+.Adicionar novos jogos ao catalogo;
+.Salvar os dados persistentemente em arquivo.
+
+Funcionalidades
+
+Principais Recursos
+
+.Catálogo completo - Visualize todos os jogos em formato resumido;
+.Detalhes do jogo - Acesse informações completas sobre cada jogo;
+.Adição de jogos - Cadastre novos títulos facilmente;
+.Persistência de dados - Os dados são salvos automaticamente em arquivo.
+
+Estrutura de Dados
+
+struct Jogo {
+    int id;                      // Identificador único
+    char titulo[50];             // Nome do jogo
+    char desenvolvedora[50];     // Empresa desenvolvedora
+    int ano;                     // Ano de lançamento
+    char genero[50];             // Gênero do jogo
+    char plataforma[50];         // Plataformas disponíveis
+    char status[30];             // Status (Disponível/Indisponível)
+};
+
+Instalação e execução
+
+Pré-requisitos
+
+Compilador C (GCC recomendado);
+Sistema operacional Linux/Windows/macOS.
+
