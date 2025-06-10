@@ -1,3 +1,4 @@
+//permite visualizar os jogos disponiveis, alterar entre Disponível e indisponivel, adicionar e remover jogo
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -6,13 +7,13 @@
 
 // Estrutura que define um Jogo
 struct Jogo {
-    int id;                // ID único do jogo
-    char titulo[50];       // Título do jogo
-    char desenvolvedora[50]; // Nome da desenvolvedora
-    int ano;               // Ano de lançamento
-    char genero[50];       // Gênero do jogo (ex: Ação, Aventura)
-    char plataforma[50];   // Plataforma(s) do jogo (ex: PS4, PC)
-    char status[30];       // Status do jogo (ex: Disponível, Alugado, Indisponível)
+    int id;
+    char titulo[50];
+    char desenvolvedora[50];
+    int ano;
+    char genero[50];
+    char plataforma[50];
+    char status[30];
 };
 
 // Função que exibe o catálogo completo de jogos
@@ -37,16 +38,15 @@ void mostrarDetalhes(struct Jogo jogo) {
 
 // Função que adiciona um novo jogo ao catálogo
 void adicionarJogo(struct Jogo jogos[], int *totalJogos) {
-    if (*totalJogos >= MAX_JOGOS) {  // Verifica se atingiu o limite de jogos
+    if (*totalJogos >= MAX_JOGOS) {
         printf("Limite máximo de jogos atingido!\n");
         return;
     }
 
-    struct Jogo novo;  // Cria um novo jogo
-    novo.id = *totalJogos + 1;  // Define o ID do novo jogo
+    struct Jogo novo;
+    novo.id = *totalJogos + 1;
 
     printf("\n=== Adicionar Novo Jogo ===\n");
-    // Coleta as informações do novo jogo
     printf("Título: ");
     scanf(" %[^\n]", novo.titulo);
     printf("Desenvolvedora: ");
@@ -57,55 +57,82 @@ void adicionarJogo(struct Jogo jogos[], int *totalJogos) {
     scanf(" %[^\n]", novo.genero);
     printf("Plataforma: ");
     scanf(" %[^\n]", novo.plataforma);
-    strcpy(novo.status, "Disponível");  // Define o status como "Disponível"
+    strcpy(novo.status, "Disponível");
 
-    jogos[*totalJogos] = novo;  // Adiciona o novo jogo ao catálogo
-    (*totalJogos)++;  // Incrementa o total de jogos
+    jogos[*totalJogos] = novo;
+    (*totalJogos)++;
     printf("Jogo adicionado com sucesso!\n");
 }
 
 // Função que remove um jogo do catálogo pelo ID
 void removerJogo(struct Jogo jogos[], int *totalJogos) {
-    if (*totalJogos == 0) {  // Verifica se há jogos para remover
+    if (*totalJogos == 0) {
         printf("Não há jogos cadastrados para remover!\n");
         return;
     }
 
-    mostrarCatalogo(jogos, *totalJogos);  // Mostra o catálogo para o usuário
+    mostrarCatalogo(jogos, *totalJogos);
     printf("\nDigite o ID do jogo que deseja remover: ");
     int idRemover;
     scanf("%d", &idRemover);
 
     int encontrado = 0;
-    // Procura pelo jogo com o ID informado
     for (int i = 0; i < *totalJogos; i++) {
         if (jogos[i].id == idRemover) {
             encontrado = 1;
-
-            // Move os jogos subsequentes para "tapar o buraco" do jogo removido
             for (int j = i; j < *totalJogos - 1; j++) {
                 jogos[j] = jogos[j + 1];
             }
-            (*totalJogos)--;  // Decrementa o total de jogos
+            (*totalJogos)--;
             printf("Jogo removido com sucesso!\n");
             break;
         }
     }
 
-    if (!encontrado) {  // Caso o jogo com o ID informado não tenha sido encontrado
+    if (!encontrado) {
         printf("Jogo não encontrado!\n");
+    }
+}
+
+// Função para alterar o status de um jogo
+void alterarStatus(struct Jogo jogos[], int totalJogos) {
+    if (totalJogos == 0) {
+        printf("Não há jogos cadastrados para alterar status!\n");
+        return;
+    }
+
+    mostrarCatalogo(jogos, totalJogos);
+    printf("\nDigite o ID do jogo que deseja alterar o status: ");
+    int id;
+    scanf("%d", &id);
+
+    int encontrado = 0;
+    for (int i = 0; i < totalJogos; i++) {
+        if (jogos[i].id == id) {
+            encontrado = 1;
+            if (strcmp(jogos[i].status, "Disponível") == 0) {
+                strcpy(jogos[i].status, "Indisponível");
+            } else {
+                strcpy(jogos[i].status, "Disponível");
+            }
+            printf("Status alterado com sucesso! Novo status: %s\n", jogos[i].status);
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Jogo com ID %d não encontrado.\n", id);
     }
 }
 
 // Função que salva todos os jogos no arquivo "jogos.txt"
 void salvarJogos(struct Jogo jogos[], int totalJogos) {
-    FILE *arquivo = fopen(ARQUIVO_DADOS, "w");  // Abre o arquivo para escrita
-    if (arquivo == NULL) {  // Se o arquivo não abrir, exibe erro
+    FILE *arquivo = fopen(ARQUIVO_DADOS, "w");
+    if (arquivo == NULL) {
         printf("Erro ao salvar dados!\n");
         return;
     }
 
-    // Salva os dados de todos os jogos no arquivo
     for (int i = 0; i < totalJogos; i++) {
         fprintf(arquivo, "%d\n", jogos[i].id);
         fprintf(arquivo, "%s\n", jogos[i].titulo);
@@ -116,77 +143,69 @@ void salvarJogos(struct Jogo jogos[], int totalJogos) {
         fprintf(arquivo, "%s\n", jogos[i].status);
     }
 
-    fclose(arquivo);  // Fecha o arquivo após salvar
+    fclose(arquivo);
 }
 
 // Função que carrega os jogos salvos no arquivo "jogos.txt"
 void carregarJogos(struct Jogo jogos[], int *totalJogos) {
-    FILE *arquivo = fopen(ARQUIVO_DADOS, "r");  // Abre o arquivo para leitura
-    if (arquivo == NULL) {  // Se o arquivo não existir, inicializa com 0 jogos
+    FILE *arquivo = fopen(ARQUIVO_DADOS, "r");
+    if (arquivo == NULL) {
         *totalJogos = 0;
         return;
     }
 
     *totalJogos = 0;
-    while (!feof(arquivo) && *totalJogos < MAX_JOGOS) {  // Lê até o final do arquivo ou até o limite de jogos
+    while (!feof(arquivo) && *totalJogos < MAX_JOGOS) {
         struct Jogo jogo;
-        if (fscanf(arquivo, "%d\n", &jogo.id) != 1) break;  // Lê o ID do jogo
-        
-        fgets(jogo.titulo, 50, arquivo);  // Lê o título do jogo
-        jogo.titulo[strcspn(jogo.titulo, "\n")] = 0;  // Remove o caractere de nova linha
-        
-        fgets(jogo.desenvolvedora, 50, arquivo);  // Lê a desenvolvedora
+        if (fscanf(arquivo, "%d\n", &jogo.id) != 1) break;
+        fgets(jogo.titulo, 50, arquivo);
+        jogo.titulo[strcspn(jogo.titulo, "\n")] = 0;
+        fgets(jogo.desenvolvedora, 50, arquivo);
         jogo.desenvolvedora[strcspn(jogo.desenvolvedora, "\n")] = 0;
-        
-        fscanf(arquivo, "%d\n", &jogo.ano);  // Lê o ano de lançamento
-        
-        fgets(jogo.genero, 50, arquivo);  // Lê o gênero
+        fscanf(arquivo, "%d\n", &jogo.ano);
+        fgets(jogo.genero, 50, arquivo);
         jogo.genero[strcspn(jogo.genero, "\n")] = 0;
-        
-        fgets(jogo.plataforma, 50, arquivo);  // Lê as plataformas
+        fgets(jogo.plataforma, 50, arquivo);
         jogo.plataforma[strcspn(jogo.plataforma, "\n")] = 0;
-        
-        fgets(jogo.status, 30, arquivo);  // Lê o status do jogo
+        fgets(jogo.status, 30, arquivo);
         jogo.status[strcspn(jogo.status, "\n")] = 0;
 
-        jogos[*totalJogos] = jogo;  // Adiciona o jogo ao array
-        (*totalJogos)++;  // Incrementa o número de jogos
+        jogos[*totalJogos] = jogo;
+        (*totalJogos)++;
     }
 
-    fclose(arquivo);  // Fecha o arquivo após leitura
+    fclose(arquivo);
 }
 
 // Função principal que controla o fluxo do programa
 int main() {
-    struct Jogo jogos[MAX_JOGOS];  // Array para armazenar os jogos
+    struct Jogo jogos[MAX_JOGOS];
     int totalJogos = 0;
 
-    carregarJogos(jogos, &totalJogos);  // Carrega os jogos do arquivo, se houver
+    carregarJogos(jogos, &totalJogos);
 
-    // Se não houver jogos salvos, inicializa com alguns exemplos
     if (totalJogos == 0) {
         printf("Nenhum jogo encontrado. Inicializando com exemplos...\n");
         struct Jogo exemplos[] = {
             {1, "Uncharted: The Nathan Drake Collection", "Naughty Dog", 2015, "Ação e aventura", "PS4, PS5, PC", "Disponível"},
             {2, "Shadow of the Colossus", "Team ICO", 2005, "Ação e aventura", "PS2, PS3, PS4", "Disponível"},
-            {3, "The Legend of Zelda: Breath of the Wild", "Nintendo EPD", 2017, "Ação e aventura", "Nintendo Switch", "Indisponível (alugado)"}
+            {3, "The Legend of Zelda: Breath of the Wild", "Nintendo EPD", 2017, "Ação e aventura", "Nintendo Switch", "Indisponível"}
         };
-
         for (int i = 0; i < 3; i++) {
-            jogos[totalJogos++] = exemplos[i];  // Adiciona jogos de exemplo
+            jogos[totalJogos++] = exemplos[i];
         }
-        salvarJogos(jogos, totalJogos);  // Salva os jogos iniciais
+        salvarJogos(jogos, totalJogos);
     }
 
-int opcao;
+    int opcao;
     do {
-        // Menu principal
         printf("\n=== Menu Principal ===\n");
         printf("1. Mostrar catálogo de jogos\n");
         printf("2. Ver detalhes de um jogo\n");
         printf("3. Adicionar novo jogo\n");
         printf("4. Remover jogo\n");
         printf("5. Salvar e sair\n");
+        printf("6. Alterar status de um jogo\n"); // Nova opção
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
@@ -194,13 +213,12 @@ int opcao;
             case 1:
                 mostrarCatalogo(jogos, totalJogos);
                 break;
-                
+
             case 2: {
                 mostrarCatalogo(jogos, totalJogos);
                 printf("\nDigite o ID do jogo para ver detalhes: ");
                 int idDetalhes;
                 scanf("%d", &idDetalhes);
-                
                 int encontrado = 0;
                 for (int i = 0; i < totalJogos; i++) {
                     if (jogos[i].id == idDetalhes) {
@@ -214,27 +232,32 @@ int opcao;
                 }
                 break;
             }
-                
+
             case 3:
                 adicionarJogo(jogos, &totalJogos);
-                salvarJogos(jogos, totalJogos); // Salva após adicionar
+                salvarJogos(jogos, totalJogos);
                 break;
-                
+
             case 4:
                 removerJogo(jogos, &totalJogos);
-                salvarJogos(jogos, totalJogos); // Salva após remover
+                salvarJogos(jogos, totalJogos);
                 break;
-                
+
             case 5:
                 salvarJogos(jogos, totalJogos);
                 printf("Dados salvos. Até logo!\n");
                 break;
-                
+
+            case 6:
+                alterarStatus(jogos, totalJogos);
+                salvarJogos(jogos, totalJogos);
+                break;
+
             default:
                 printf("Opção inválida! Tente novamente.\n");
         }
+
     } while (opcao != 5);
 
     return 0;
 }
-
