@@ -178,5 +178,63 @@ int main() {
         salvarJogos(jogos, totalJogos);  // Salva os jogos iniciais
     }
 
-    int opcao,
+int opcao;
+    do {
+        // Menu principal
+        printf("\n=== Menu Principal ===\n");
+        printf("1. Mostrar catálogo de jogos\n");
+        printf("2. Ver detalhes de um jogo\n");
+        printf("3. Adicionar novo jogo\n");
+        printf("4. Remover jogo\n");
+        printf("5. Salvar e sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                mostrarCatalogo(jogos, totalJogos);
+                break;
+                
+            case 2: {
+                mostrarCatalogo(jogos, totalJogos);
+                printf("\nDigite o ID do jogo para ver detalhes: ");
+                int idDetalhes;
+                scanf("%d", &idDetalhes);
+                
+                int encontrado = 0;
+                for (int i = 0; i < totalJogos; i++) {
+                    if (jogos[i].id == idDetalhes) {
+                        mostrarDetalhes(jogos[i]);
+                        encontrado = 1;
+                        break;
+                    }
+                }
+                if (!encontrado) {
+                    printf("Jogo não encontrado!\n");
+                }
+                break;
+            }
+                
+            case 3:
+                adicionarJogo(jogos, &totalJogos);
+                salvarJogos(jogos, totalJogos); // Salva após adicionar
+                break;
+                
+            case 4:
+                removerJogo(jogos, &totalJogos);
+                salvarJogos(jogos, totalJogos); // Salva após remover
+                break;
+                
+            case 5:
+                salvarJogos(jogos, totalJogos);
+                printf("Dados salvos. Até logo!\n");
+                break;
+                
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+        }
+    } while (opcao != 5);
+
+    return 0;
+}
 
