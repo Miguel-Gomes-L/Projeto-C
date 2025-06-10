@@ -1,122 +1,31 @@
-Este é um simples sistema de gerenciamento de catálogo de jogos desenvolvido em C. O sistema permite o gerenciamento de jogos, incluindo adicionar, remover, e visualizar detalhes de jogos, além de salvar e carregar os dados de um arquivo de texto.
+Visão Geral
+Sistema desenvolvido em C para gerenciamento de um catálogo de jogos, com armazenamento persistente em arquivo texto. Permite o CRUD completo (Create, Read, Update, Delete) de itens do acervo.
 
-Funcionalidades
-Ver catálogo completo: Exibe todos os jogos presentes no catálogo.
+Funcionalidades Principais
 
-Ver detalhes de um jogo: Exibe informações detalhadas sobre um jogo selecionado.
+Gerenciamento do Catálogo
+- Visualização completa**: Listagem de todos os jogos cadastrados
+- Detalhamento**: Consulta de informações específicas de cada jogo
+- Controle de status**: Alternância entre "Disponível" e "Indisponível"
 
-Adicionar novo jogo: Permite adicionar um novo jogo ao catálogo.
+Operações de Manutenção
+- Inclusão**: Adição de novos títulos ao acervo
+- Exclusão**: Remoção permanente de registros
+- Persistência**: Armazenamento automático em arquivo `jogos.txt`
 
-Remover jogo: Remove um jogo do catálogo pelo ID.
+Fluxo de Dados
+1. Inicialização**: Carrega dados do arquivo texto ao iniciar
+2. Operações**: Todas as alterações são feitas na memória
+3. Finalização**: Salva automaticamente no encerramento
 
-Salvar e carregar dados: Os dados dos jogos são salvos em um arquivo de texto (jogos.txt) e podem ser carregados ao iniciar o sistema.
+Dados Armazenados
+Para cada jogo são mantidas as seguintes informações:
+- Identificador único (ID)
+- Metadados (título, desenvolvedora, ano)
+- Classificação (gênero, plataforma)
+- Status de disponibilidade
 
-Estrutura de Arquivos
-Arquivo de Dados: jogos.txt
-Este arquivo armazena os dados dos jogos no formato:
-
-ID
-Título do jogo
-Desenvolvedora
-Ano de lançamento
-Gênero
-Plataforma
-Status (Disponível, Indisponível, Alugado, etc.)
-Exemplo de conteúdo do arquivo jogos.txt:
-
-1
-Uncharted: The Nathan Drake Collection
-Naughty Dog
-2015
-Ação e aventura
-PS4, PS5, PC
-Disponível
-2
-Shadow of the Colossus
-Team ICO
-2005
-Ação e aventura
-PS2, PS3, PS4
-Disponível
-3
-The Legend of Zelda: Breath of the Wild
-Nintendo EPD
-2017
-Ação e aventura
-Nintendo Switch
-Indisponível (alugado)
-Como Executar
-Requisitos
-Um compilador C (ex: GCC)
-
-Sistema operacional com suporte a C (Linux, macOS, Windows com WSL ou MinGW)
-
-Compilação
-Para compilar o código:
-
-bash
-Copiar código
-gcc -o catalogo_jogos catalogo_jogos.c
-Execução
-Após a compilação, execute o programa:
-
-bash
-Copiar código
-./catalogo_jogos
-Isso iniciará o menu interativo onde você pode escolher entre visualizar o catálogo de jogos, adicionar ou remover jogos, entre outras opções.
-
-Funções Principais
-mostrarCatalogo()
-Exibe o catálogo de jogos, listando os jogos com seu ID, título, ano de lançamento e status.
-
-Parâmetros:
-
-jogos[]: Array de jogos cadastrados.
-
-totalJogos: Número total de jogos cadastrados.
-
-mostrarDetalhes()
-Exibe todos os detalhes de um jogo selecionado pelo seu ID.
-
-Parâmetros:
-
-jogo: Estrutura de dados de um único jogo.
-
-adicionarJogo()
-Adiciona um novo jogo ao catálogo.
-
-Parâmetros:
-
-jogos[]: Array de jogos cadastrados.
-
-totalJogos: Ponteiro para o número total de jogos cadastrados.
-
-removerJogo()
-Remove um jogo do catálogo baseado no ID informado pelo usuário.
-
-Parâmetros:
-
-jogos[]: Array de jogos cadastrados.
-
-totalJogos: Ponteiro para o número total de jogos cadastrados.
-
-salvarJogos()
-Salva todos os jogos do catálogo em um arquivo de texto (jogos.txt).
-
-Parâmetros:
-
-jogos[]: Array de jogos cadastrados.
-
-totalJogos: Número total de jogos cadastrados.
-
-carregarJogos()
-Carrega os dados dos jogos armazenados no arquivo de texto (jogos.txt).
-
-Parâmetros:
-
-jogos[]: Array de jogos cadastrados.
-
-totalJogos: Ponteiro para o número total de jogos cadastrados.
-
-main()
-Função principal que executa o menu interativo e gerencia as operações do sistema.
+Observações Técnicas
+- Capacidade máxima: 100 jogos (configurável via `MAX_JOGOS`)
+- Formato de armazenamento: Texto simples com campos delimitados por quebras de linha
+- IDs são gerenciados automaticamente pelo sistema
